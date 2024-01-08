@@ -1,4 +1,3 @@
---REMOVE BEFORE FINAL SAVE - Bring in both tables as shown below
 Select *
 From PortfolioProjectCovidData..CovidDeaths
 WHERE Continent is not null
@@ -8,7 +7,7 @@ Select *
 From PortfolioProjectCovidData..CovidVaccinations
 Order by 3,4
 
---REMOVE BEFORE FINAL SAVE - Select Data that we are going to be using
+--Select Data that we are going to be using
 
 Select Location, date, total_cases,new_cases, total_deaths, population
 From PortfolioProjectCovidData..CovidDeaths
@@ -47,9 +46,6 @@ WHERE continent is not null
 Group By Location
 Order by TotalDeathCount desc
 
---LET'S BREAK THINGS DOWN BY CONTINENT
-
-
 --Showing Continents with the Highest Death Count per population
 
 Select continent, MAX(cast(total_deaths as int)) as TotalDeathCount
@@ -59,8 +55,6 @@ WHERE continent is not null
 Group By continent
 Order by TotalDeathCount desc
 
-
-
 -- GLOBAL NUMBERS
 
 Select SUM(new_cases) as total_cases, Sum(new_deaths) as total_deaths, Sum(new_deaths)/Sum(new_cases)*100 as DeathPercentage
@@ -69,10 +63,9 @@ Where continent is not null
 --Group by date
 order by 1,2
 
-
 --Looking at Total Population vs Vaccinations
-
 --First, join CovidDeaths and CovidVaccinations table. Confirm all is joining correctly.
+	
 Select *
 From PortfolioProjectCovidData..CovidDeaths dea
 Join PortfolioProjectCovidData..CovidVaccinations vac
@@ -103,7 +96,6 @@ Where dea.continent is not null
 order by 2,3
 
 -- Taking the previous set, let's look at the MAX RollingPeopleVaccinated per location to see how many people per country have been vaccinated. 
-
 -- Need to create CTE or a temp table
 
 -- CTE
@@ -152,7 +144,8 @@ Where dea.continent is not null
 Select *, (RollingPeopleVaccinated/Population)*100
 From #PercentOfPopulationVaccinated
 
---Creating View to store data for later visualizations
+	
+--CREATING VIEW to store data for later visualizations
 
 USE PortfolioProjectCovidData
 Go
